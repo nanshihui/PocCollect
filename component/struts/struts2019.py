@@ -43,7 +43,7 @@ class P(T):
         if res_html.find("88888887") <> -1:
       
 
-            info = target_url + "struts016  Vul"
+            info = target_url + "struts019  Vul"
             result['result']=True
             result['VerifyInfo'] = {}
             result['VerifyInfo']['type']='struts019 Vul'
