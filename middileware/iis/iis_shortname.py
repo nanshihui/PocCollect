@@ -17,17 +17,19 @@ class P(T):
             protocal = "https"
         else:
             protocal = "http"
-        target_url = protocal + "://"+ip+":"+str(port)
+        target_url = protocal + "://"+ip+":"+port
 
 
         result = {}
         result['result']=False
         r=None
-
+        s=None
         try:
 
-            status_1=requests.get(url=target_url+'/*~1****/a.aspx',timeout=timeout,verify=verify,allow_redirects=False).status_code
-            status_2=requests.get(url=target_url+'/l1j1e*~1****/a.aspx',timeout=timeout,verify=verify,allow_redirects=False).status_code
+            r=requests.get(url=target_url+'/*~1****/a.aspx',timeout=timeout,allow_redirects=False)
+            status_1=r.status_code
+            s=requests.get(url=target_url+'/l1j1e*~1****/a.aspx',timeout=timeout,allow_redirects=False)
+            status_2=s.status_code
             #print target_url
             if status_1 == 404 and status_2 == 400:
                 result['result']=True
@@ -35,6 +37,7 @@ class P(T):
                 result['VerifyInfo']['type']='iis short name Vulnerability'
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']= 'null'
+                result['VerifyInfo']['level']= 'warning'
                 result['VerifyInfo']['result'] =r.content
         except Exception,e:
             #print '[-]error',
@@ -42,12 +45,15 @@ class P(T):
             #pass
             #print traceback.print_exc()
         finally:
-            if r is not None:
-                r.close()
-                del r
+            closeitem(r)
+            closeitem(s)
             return result
-
+def closeitem(instance):
+    if instance is not None:
+        instance.close()
+        del instance
 
 
 if __name__ == '__main__':
     print P().verify(ip='cos.99.com',port='80')
+
