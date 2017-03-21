@@ -19,4 +19,4 @@ PocCollect works out of the box with [Python](http://www.python.org/download/) v
 
 Notice
 ----
-POC incide are only for learning purposes .Do not use for other illegal purposes
+POC incide are only for learning purposes .Do not use for other illegal purposes.
