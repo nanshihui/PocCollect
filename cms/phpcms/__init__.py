@@ -1,8 +1,8 @@
-KEYWORDS = ['huaficms', ]
+KEYWORDS = ['phpcms', ]
 def rules(head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
 
 
-	if 'huaficms' in context or 'huaficms' in head:
+	if 'phpcms' in context or 'phpcms' in head:
 		return True
 	else:
 		return False
